@@ -1,0 +1,29 @@
+{
+  "name": "fulldome-empty-canvas",
+  "version": "0.1.0",
+  "description": "Barebones fulldome WebGL artwork template: SDF sphere grid that blinks to the beat. Quick-start for the av-controls / time-n-controls / dome-control stack.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "av-controls": "^0.5.1",
+    "dome-control-runtime": "^0.1.0",
+    "gl-matrix": "^3.4.4",
+    "mediabunny": "^1.40.1",
+    "onnxruntime-web": "^1.24.3",
+    "peerjs": "^1.5.5",
+    "time-n-controls": "^0.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10",
+    "vite-plugin-glsl": "^1.6.0",
+    "vite-plugin-static-copy": "^4.1.0",
+    "vite-plugin-wasm": "^3.6.0"
+  }
+}

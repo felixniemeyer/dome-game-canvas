@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #000;
+  font-family: sans-serif;
+}
+
+#canvas {
+  display: block; 
+  position: absolute; 
+
+  left: 50%; 
+  top: 50%; 
+
+  transform: translate(-50%, -50%);
+
+  /* square domemaster */
+  width: min(100vw, 100vh);
+  height: min(100vw, 100vh);
+  cursor: none; 
+
+  /* for debugging fxaa 
+  image-rendering: pixelated; /**/
+}
+
+#canvas.simulate {
+  width: 100vw; 
+  height: 100vh;
+  cursor: default; 
+}
+
+#fps-container {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: #fff;
+  z-index: 1000;
+  background-color: #0008;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}

@@ -1,0 +1,18 @@
+# Logs
+*.log
+npm-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.sw?
+
+# NOTE: public/100.onnx (the trained phase-detection model) IS tracked on
+# purpose — see MODEL_LICENSE.md for its (non-commercial) terms.
