@@ -7,7 +7,7 @@ import {
   type ControllerSessionState,
   type ControllerTransport,
   type DomeControlPacket,
-} from 'dome-control-runtime'
+} from '@dome-control/runtime'
 import type CoopGameEngine from './engine'
 
 declare global {
@@ -28,7 +28,7 @@ function nowSeconds() {
 
 export default class ArtworkDomeControlAdapter {
   private readonly query = new URLSearchParams(window.location.search)
-  private readonly sessionId = this.query.get('session') ?? 'fabric-artwork-local'
+  private readonly sessionId = this.query.get('session') ?? 'fulldome-empty-canvas'
   private readonly peerId = this.query.get('artwork-peer') ?? 'artwork-runtime'
   private transport: ControllerTransport = 'debug-local'
   private peer: Peer | null = null

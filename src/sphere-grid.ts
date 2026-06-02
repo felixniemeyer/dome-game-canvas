@@ -1,4 +1,4 @@
-import { Controls } from 'av-controls'
+import { Controls } from '@av-controls/protocol'
 import type { ReadonlyMat3, ReadonlyVec3 } from 'gl-matrix'
 
 import Camera from './camera'

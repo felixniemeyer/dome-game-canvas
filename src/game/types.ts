@@ -1,4 +1,4 @@
-import type { ControllerAlignmentCross, ControllerPlayerState } from 'dome-control-runtime'
+import type { ControllerAlignmentCross, ControllerPlayerState } from '@dome-control/runtime'
 
 export type ObjectiveSnapshot = {
   position: [number, number, number]

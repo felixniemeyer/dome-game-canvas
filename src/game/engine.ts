@@ -1,6 +1,6 @@
-import { Controls } from 'av-controls'
+import { Controls } from '@av-controls/protocol'
 import { vec3, type ReadonlyMat3, type ReadonlyVec3 } from 'gl-matrix'
-import { LFOControl, type PhaseClock } from 'time-n-controls'
+import { LFOControl, type PhaseClock } from '@av-controls/time-n-controls'
 import type { TimeContext } from '../time-context'
 import {
   clamp01,
@@ -9,7 +9,7 @@ import {
   type ControllerInputState,
   type ControllerAlignmentCross,
   type ControllerPlayerState,
-} from 'dome-control-runtime'
+} from '@dome-control/runtime'
 import type { CoopGameSnapshot, ObjectiveSnapshot } from './types'
 
 type PlayerRecord = {

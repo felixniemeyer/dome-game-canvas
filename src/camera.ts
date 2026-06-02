@@ -1,4 +1,4 @@
-import { Controls } from 'av-controls'
+import { Controls } from '@av-controls/protocol'
 import { mat3, quat, vec3, type ReadonlyVec3 } from 'gl-matrix'
 
 const localRight = vec3.fromValues(1, 0, 0)

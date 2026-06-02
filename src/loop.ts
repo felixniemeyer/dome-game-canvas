@@ -2,14 +2,14 @@ import {
   Transports,
   Controls,
   Messages,
-} from 'av-controls'
+} from '@av-controls/protocol'
 import type { TimeContext, TimeContextState } from './time-context'
 
 import Camera from './camera'
 import DomemasterOutput from './domemaster-output'
 import SimulatorOutput from './full-dome-simulator'
 
-import { AutoPhase, SwitchablePhaseClock, type PhaseSource } from 'time-n-controls'
+import { AutoPhase, SwitchablePhaseClock, type PhaseSource } from '@av-controls/time-n-controls'
 
 import CoopGameEngine from './game/engine'
 import DomeGameOverlay from './game/overlay'
