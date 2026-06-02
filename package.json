@@ -1,5 +1,5 @@
 {
-  "name": "fulldome-empty-canvas",
+  "name": "dome-game-canvas",
   "version": "0.1.0",
   "description": "Barebones fulldome WebGL artwork template: SDF sphere grid that blinks to the beat. Quick-start for the av-controls / time-n-controls / dome-control stack.",
   "scripts": {

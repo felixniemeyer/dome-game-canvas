@@ -1,4 +1,4 @@
-# fulldome-empty-canvas
+# dome-game-canvas
 
 A barebones [fulldome](https://en.wikipedia.org/wiki/Fulldome) WebGL artwork
 template. It renders a grid of spheres with a signed-distance field (SDF) in a

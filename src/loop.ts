@@ -330,7 +330,7 @@ export default class Loop {
       console.info(`[artwork] connect ws-broker-url: ${wsBrokerUrl}`)
       this.wsReceiver = new Transports.WebSocket.Receiver(
         {
-          id: 'fulldome-empty-canvas',
+          id: 'dome-game-canvas',
           receiver: controlGroup,
           handleMessage: (message: Messages.ArtworkRuntimeCommandMessage) => {
             this.handleArtworkRuntimeCommand(message)

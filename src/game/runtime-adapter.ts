@@ -28,7 +28,7 @@ function nowSeconds() {
 
 export default class ArtworkDomeControlAdapter {
   private readonly query = new URLSearchParams(window.location.search)
-  private readonly sessionId = this.query.get('session') ?? 'fulldome-empty-canvas'
+  private readonly sessionId = this.query.get('session') ?? 'dome-game-canvas'
   private readonly peerId = this.query.get('artwork-peer') ?? 'artwork-runtime'
   private transport: ControllerTransport = 'debug-local'
   private peer: Peer | null = null
