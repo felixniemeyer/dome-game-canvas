@@ -11,7 +11,7 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "av-controls": "^0.5.1",
+    "av-controls": "^0.5.2",
     "dome-control-runtime": "^0.1.0",
     "gl-matrix": "^3.4.4",
     "mediabunny": "^1.40.1",
