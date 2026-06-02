@@ -1,7 +1,7 @@
 import { vec2, type ReadonlyMat3, type ReadonlyVec3 } from 'gl-matrix'
 import { camDirToDomemaster } from "@dome-control/runtime";
-import cursorFs from '../shaders/game/cursor.fs'
-import cursorVs from '../shaders/game/cursor.vs'
+import cursorFs from './cursor.fs'
+import cursorVs from './cursor.vs'
 import { compileShaders, makeUniformLocationAccessor } from '../utils/shader-tools'
 import type { CoopGameSnapshot } from './types'
 
