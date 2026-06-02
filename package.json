@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:suite": "concurrently -k -n broker,controls,timeline,domesrv,domecli,canvas -c blue,green,magenta,cyan,yellow,gray \"npx -y av-controls-server\" \"npx -y av-controller\" \"npx -y av-timeline\" \"npx -y dome-control-server\" \"npx -y dome-control-client\" vite"
   },
   "license": "MIT",
   "type": "module",
@@ -20,6 +21,7 @@
     "time-n-controls": "^0.0.3"
   },
   "devDependencies": {
+    "concurrently": "^9.1.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
     "vite-plugin-glsl": "^1.6.0",
