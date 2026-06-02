@@ -12,18 +12,18 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@av-controls/protocol": "file:../../../../../../tmp/av-controls-protocol-0.5.2.tgz",
-    "@av-controls/time-n-controls": "file:../../../../../../tmp/av-controls-time-n-controls-0.0.3.tgz",
-    "@dome-control/runtime": "file:../../../../../../tmp/dome-control-runtime-0.1.0.tgz",
+    "@av-controls/protocol": "*",
+    "@av-controls/time-n-controls": "*",
+    "@dome-control/runtime": "*",
     "gl-matrix": "^3.4.4",
-    "mediabunny": "^1.40.1",
-    "onnxruntime-web": "^1.24.3",
+    "mediabunny": "^1.46.0",
+    "onnxruntime-web": "^1.26.0",
     "peerjs": "^1.5.5"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0",
+    "concurrently": "^10.0.3",
     "typescript": "^6.0.3",
-    "vite": "^8.0.10",
+    "vite": "^8.0.16",
     "vite-plugin-glsl": "^1.6.0",
     "vite-plugin-static-copy": "^4.1.0",
     "vite-plugin-wasm": "^3.6.0"
