@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "dev:suite": "concurrently -k -n broker,controls,timeline,domesrv,domecli,canvas -c blue,green,magenta,cyan,yellow,gray \"npx -y @av-controls/broker\" \"npx -y @av-controls/controller --port 4173\" \"npx -y @av-controls/timeline --port 4174\" \"npx -y @dome-control/server\" \"npx -y @dome-control/client --port 4175\" vite"
+    "dev:suite": "concurrently -k -n broker,controls,timeline,domesrv,domecli,canvas -c blue,green,magenta,cyan,yellow,gray \"npx -y @av-controls/server\" \"npx -y @av-controls/controller --port 4173\" \"npx -y @av-controls/timeline --port 4174\" \"npx -y @dome-control/server\" \"npx -y @dome-control/client --port 4175\" vite"
   },
   "license": "MIT",
   "type": "module",
