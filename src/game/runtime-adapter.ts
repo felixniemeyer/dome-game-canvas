@@ -1,5 +1,6 @@
 import { DataConnection, Peer } from 'peerjs'
 import {
+  fetchServerConfig,
   registerArtwork,
   REGISTRY_PATH,
   type ArtworkRegistration,
@@ -39,6 +40,8 @@ export default class ArtworkDomeControlAdapter {
   private readonly peerId = this.query.get('artwork-peer') ?? `artwork-${Math.random().toString(36).slice(2, 10)}`
   private readonly registryPort = Number(this.query.get('registry-port') ?? 8082)
   private registration: ArtworkRegistration | null = null
+  // ICE servers dictated by the server (LAN => []); fetched once, reused on reconnect.
+  private iceServers: RTCIceServer[] | null = null
   private transport: ControllerTransport = 'debug-local'
   private peer: Peer | null = null
   private readonly dataConnections = new Map<string, DataConnection>()
@@ -132,14 +135,19 @@ export default class ArtworkDomeControlAdapter {
     }
   }
 
-  private connectPeerServer() {
+  private async connectPeerServer() {
     this.destroyPeer()
+
+    if (this.iceServers === null) {
+      this.iceServers = (await fetchServerConfig(this.registryUrl())).iceServers
+    }
 
     const nextPeer = new Peer(this.peerId, {
       host: this.peerHost,
       port: this.peerPort,
       path: this.peerPath,
       secure: this.peerSecure,
+      config: { iceServers: this.iceServers ?? [] },
     })
     this.peer = nextPeer
 
