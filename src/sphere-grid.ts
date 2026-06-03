@@ -30,37 +30,37 @@ export default class SphereGrid {
   private quadVao: RectVao
 
   private cellSizeFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('cell size', 0, 0, 12, 100, '#4a8'),
+    new Controls.Base.Args('cell size', 0, 0, 10, 50, '#4a8'),
     new Controls.Fader.State(2.5), 0.5, 8, 2,
   ))
   private radiusFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('radius', 14, 0, 12, 100, '#4a8'),
+    new Controls.Base.Args('radius', 10, 0, 10, 50, '#4a8'),
     new Controls.Fader.State(0.45), 0.05, 2, 2,
   ))
   private stepsFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('march steps', 28, 0, 12, 100, '#48a'),
+    new Controls.Base.Args('march steps', 20, 0, 10, 50, '#48a'),
     new Controls.Fader.State(64), 16, 192, 0,
   ))
   private baseHueFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('base hue', 42, 0, 12, 100, '#a6a'),
+    new Controls.Base.Args('base hue', 30, 0, 10, 50, '#a6a'),
     new Controls.Fader.State(0.58), 0, 1, 2,
   ))
   private blinkHueFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('blink hue', 56, 0, 12, 100, '#a86'),
+    new Controls.Base.Args('blink hue', 40, 0, 10, 50, '#a86'),
     new Controls.Fader.State(0.08), 0, 1, 2,
   ))
   private blinkIntensityFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('blink', 70, 0, 12, 100, '#c84'),
+    new Controls.Base.Args('blink', 50, 0, 10, 50, '#c84'),
     new Controls.Fader.State(0.6), 0, 3, 2,
   ))
   private blinkEpsilonFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('blink decay', 84, 0, 12, 100, '#c84'),
+    new Controls.Base.Args('blink decay', 60, 0, 10, 50, '#c84'),
     new Controls.Fader.State(0.12), 0.01, 1, 2,
   ))
 
-  // occupies the top band of its parent tab so other controls fit below it
-  private controlGroup = new Controls.Group.Receiver(new Controls.Group.SpecWithoutControls(
-    new Controls.Base.Args('sphere grid', 0, 0, 100, 58, '#888'),
+  // raymarching / shading faders, shown in their own 'scene' tab
+  private raymarchingGroup = new Controls.Group.Receiver(new Controls.Group.SpecWithoutControls(
+    new Controls.Base.Args('raymarching', 0, 0, 100, 100, '#888'),
   ), {
     cellSize: this.cellSizeFader,
     radius: this.radiusFader,
@@ -81,8 +81,8 @@ export default class SphereGrid {
     this.quadVao = new RectVao(gl)
   }
 
-  getControlGroup() {
-    return this.controlGroup
+  getRaymarchingGroup() {
+    return this.raymarchingGroup
   }
 
   /**

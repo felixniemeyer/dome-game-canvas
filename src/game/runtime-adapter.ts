@@ -1,5 +1,8 @@
 import { DataConnection, Peer } from 'peerjs'
 import {
+  registerArtwork,
+  REGISTRY_PATH,
+  type ArtworkRegistration,
   type ControllerAlignmentCross,
   type ControllerInputPacket,
   type ControllerInputState,
@@ -29,7 +32,13 @@ function nowSeconds() {
 export default class ArtworkDomeControlAdapter {
   private readonly query = new URLSearchParams(window.location.search)
   private readonly sessionId = this.query.get('session') ?? 'dome-game-canvas'
-  private readonly peerId = this.query.get('artwork-peer') ?? 'artwork-runtime'
+  // Human-facing name advertised on the registry; must be unique across artworks.
+  private readonly artworkName = this.query.get('name') ?? 'Dome Game'
+  // Connection id controllers dial. Unique per instance; controllers learn it
+  // from the registry rather than guessing, so a random id is fine.
+  private readonly peerId = this.query.get('artwork-peer') ?? `artwork-${Math.random().toString(36).slice(2, 10)}`
+  private readonly registryPort = Number(this.query.get('registry-port') ?? 8082)
+  private registration: ArtworkRegistration | null = null
   private transport: ControllerTransport = 'debug-local'
   private peer: Peer | null = null
   private readonly dataConnections = new Map<string, DataConnection>()
@@ -101,6 +110,8 @@ export default class ArtworkDomeControlAdapter {
       window.clearTimeout(this.peerReconnectTimer)
       this.peerReconnectTimer = null
     }
+    this.registration?.dispose()
+    this.registration = null
     this.destroyPeer()
     this.engine.setCursorDebugLogger(null)
     this.engine.setMotionDebugLogger(null)
@@ -137,6 +148,7 @@ export default class ArtworkDomeControlAdapter {
       this.logRuntime('peer-open', {
         peerId: this.peerId,
       })
+      this.ensureRegistered()
       this.onActivity()
     })
 
@@ -166,6 +178,28 @@ export default class ArtworkDomeControlAdapter {
       if (this.peer !== nextPeer) return
       this.destroyPeer()
       this.schedulePeerReconnect()
+    })
+  }
+
+  private registryUrl() {
+    // https artworks reach the registry same-origin (proxied); http artworks
+    // connect directly to the registry port.
+    return this.peerSecure
+      ? `wss://${window.location.host}${REGISTRY_PATH}`
+      : `ws://${this.peerHost}:${this.registryPort}${REGISTRY_PATH}`
+  }
+
+  // Advertise this artwork on the registry once the peer id is live. The
+  // registration owns its own socket and reconnects independently of the peer.
+  private ensureRegistered() {
+    if (this.registration) return
+    this.registration = registerArtwork({
+      url: this.registryUrl(),
+      id: this.peerId,
+      name: this.artworkName,
+      sessionId: this.sessionId,
+      onRegistered: () => this.logRuntime('registry-registered', { name: this.artworkName }),
+      onRejected: (reason) => this.logRuntime('registry-rejected', { name: this.artworkName, reason }),
     })
   }
 

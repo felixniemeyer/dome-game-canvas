@@ -92,7 +92,7 @@ export default class Loop {
   // --- controls: general tab ---
 
   private simulatePlanetariumSwitch = new Controls.ConfirmSwitch.Receiver(new Controls.ConfirmSwitch.Spec(
-    new Controls.Base.Args('fulldome simulation', 12, 64, 18, 32, '#2e7f5c'),
+    new Controls.Base.Args('fulldome simulation', 10, 0, 10, 15, '#2e7f5c'),
     new Controls.ConfirmSwitch.State(false),
   ), (on: boolean) => {
     if (on) this.canvas.classList.add('simulate')
@@ -136,19 +136,19 @@ export default class Loop {
   })
   private switchablePhaseClock = new SwitchablePhaseClock(this.autoPhase)
   private audioMeter = new Controls.Meter.Receiver(new Controls.Meter.Spec(
-    new Controls.Base.Args('audio level', 85, 45, 5, 25, '#b06329'),
+    new Controls.Base.Args('audio level', 65, 0, 5, 45, '#b06329'),
     0, 1, new Controls.Meter.State(0), 'log',
   ))
   private phaseCake = new Controls.Cake.Receiver(new Controls.Cake.Spec(
-    new Controls.Base.Args('phase', 70, 45, 15, 25, '#1f6a47'),
+    new Controls.Base.Args('phase', 30, 0, 15, 25, '#1f6a47'),
     0, 1, new Controls.Cake.State(0), 2,
   ))
   private beatPhaseCake = new Controls.Cake.Receiver(new Controls.Cake.Spec(
-    new Controls.Base.Args('beat phase', 60, 45, 10, 25, '#aa6633'),
+    new Controls.Base.Args('beat phase', 20, 0, 10, 25, '#aa6633'),
     0, 1, new Controls.Cake.State(0), 2,
   ))
   private phaseSourceSelector = new Controls.Selector.Receiver(new Controls.Selector.Spec(
-    new Controls.Base.Args('phase source', 60, 0, 10, 45, '#2e4f83'),
+    new Controls.Base.Args('phase source', 0, 0, 10, 45, '#2e4f83'),
     ['off', 'constant', 'auto', 'tap'],
     new Controls.Selector.State(2),
   ), (index: number) => {
@@ -183,7 +183,7 @@ export default class Loop {
     this.autoPhase.setPhaseSmoothing(value)
   })
   private beatsPerBarFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('beats per bar', 40, 30, 10, 40, '#68a'),
+    new Controls.Base.Args('beats per bar', 10, 0, 10, 45, '#68a'),
     new Controls.Fader.State(4), 0.6, 8.4, 0,
   ), (beats: number) => {
     const rounded = Math.round(beats)
@@ -191,22 +191,22 @@ export default class Loop {
     this.switchablePhaseClock.getConstantClock().setBeatsPerBar(rounded)
   })
   private tapLiveButton = new Controls.Pad.Receiver(new Controls.Pad.Spec(
-    new Controls.Base.Args('tap live', 20, 35, 10, 15, '#8a5'),
+    new Controls.Base.Args('tap live', 50, 60, 10, 15, '#8a5'),
   ), () => {
     this.switchablePhaseClock.getTapClock().tap('default', 1, 7, 0.5, 0.2)
   })
   private tapAccuButton = new Controls.Pad.Receiver(new Controls.Pad.Spec(
-    new Controls.Base.Args('tap accu', 30, 35, 10, 15, '#68a'),
+    new Controls.Base.Args('tap accu', 60, 60, 10, 15, '#68a'),
   ), () => {
     this.switchablePhaseClock.getTapClock().tap('accu', 0.8, 7, 1, 1)
   })
   private tapAdjustButton = new Controls.Pad.Receiver(new Controls.Pad.Spec(
-    new Controls.Base.Args('tap adjust', 20, 50, 10, 15, '#a86'),
+    new Controls.Base.Args('tap adjust', 50, 75, 10, 15, '#a86'),
   ), () => {
     this.switchablePhaseClock.getTapClock().tap('adjust', 1, 3, 0.15, 0.01)
   })
   private setDownbeatButton = new Controls.Pad.Receiver(new Controls.Pad.Spec(
-    new Controls.Base.Args('set downbeat', 30, 50, 10, 15, '#a64'),
+    new Controls.Base.Args('set downbeat', 60, 75, 10, 15, '#a64'),
   ), () => {
     if (this.switchablePhaseClock.getActiveSource() === 'tap') {
       const unwrapped = this.switchablePhaseClock.getTapClock().getUnwrappedPhase()
@@ -214,12 +214,12 @@ export default class Loop {
     }
   })
   private phaseAnchor = new Controls.TimeAnchor.Receiver(new Controls.TimeAnchor.Spec(
-    new Controls.Base.Args('phase anchor', 50, 0, 10, 15, '#fa5'),
+    new Controls.Base.Args('phase anchor', 20, 85, 10, 15, '#fa5'),
   ), undefined, (time: number) => {
     this.switchablePhaseClock.getConstantClock().setAnchorTime(time)
   })
   private constantBpmFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
-    new Controls.Base.Args('BPM', 50, 15, 10, 55, '#68a'),
+    new Controls.Base.Args('BPM', 30, 45, 10, 55, '#68a'),
     new Controls.Fader.State(120), 60, 180, 2,
   ), (bpm: number) => {
     const beatsPerBar = Math.round(this.beatsPerBarFader.value)
@@ -255,13 +255,13 @@ export default class Loop {
     this.simulatorOutput = new SimulatorOutput(gl)
 
     const relaunchButton = new Controls.ConfirmButton.Receiver(new Controls.ConfirmButton.Spec(
-      new Controls.Base.Args('relaunch visuals', 32, 64, 18, 32, '#943535'),
+      new Controls.Base.Args('relaunch visuals', 20, 0, 10, 15, '#943535'),
     ), () => {
       window.location.reload()
     })
 
     const domeResSelector = new Controls.Selector.Receiver(new Controls.Selector.Spec(
-      new Controls.Base.Args('dome res', 0, 62, 10, 38, '#888'),
+      new Controls.Base.Args('dome res', 0, 0, 10, 100, '#888'),
       domeResOptions.map(n => `${n}`),
       new Controls.Selector.State(domeResOptions.indexOf(this.domeRes)),
     ), (v: number) => {
@@ -280,10 +280,14 @@ export default class Loop {
         general: new Controls.Group.Receiver(new Controls.Group.SpecWithoutControls(
           new Controls.Base.Args('general', 0, 0, 100, 100, '#888'),
         ), {
-          spheres: this.sphereGrid.getControlGroup(),
           domeRes: domeResSelector,
           simulate: this.simulatePlanetariumSwitch,
           relaunch: relaunchButton,
+        }),
+        scene: new Controls.Group.Receiver(new Controls.Group.SpecWithoutControls(
+          new Controls.Base.Args('scene', 0, 0, 100, 100, '#888'),
+        ), {
+          raymarching: this.sphereGrid.getRaymarchingGroup(),
         }),
         bpm: new Controls.Group.Receiver(new Controls.Group.SpecWithoutControls(
           new Controls.Base.Args('bpm', 0, 0, 100, 100, '#888'),
