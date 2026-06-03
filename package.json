@@ -12,9 +12,9 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@av-controls/protocol": "*",
-    "@av-controls/time-n-controls": "*",
-    "@dome-control/runtime": "*",
+    "@av-controls/protocol": "^0.5.2",
+    "@av-controls/time-n-controls": "^0.0.3",
+    "@dome-control/runtime": "^0.1.0",
     "gl-matrix": "^3.4.4",
     "mediabunny": "^1.46.0",
     "onnxruntime-web": "^1.26.0",
