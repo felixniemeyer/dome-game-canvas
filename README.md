@@ -42,6 +42,12 @@ go, use:
 npm run dev:suite
 ```
 
+Ports: 
+- 5173 => artwork/game
+- 4173 => controller
+- 4174 => timeline
+- 4175 => game controller 
+
 ## License
 
 - **Source code** — MIT (see `LICENSE`).
