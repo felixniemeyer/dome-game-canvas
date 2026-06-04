@@ -1,7 +1,7 @@
 # Model License — `public/100.onnx`
 
 The trained phase-detection model file **`public/100.onnx`** (the neural network
-used by `time-n-controls` `AutoPhase` for automatic beat/BPM recognition) is
+used by `time-n-controls` `AutoPhase` for musical bar phase estimation) is
 **not** covered by the project's MIT license. It is licensed separately under
 the terms below.
 
