@@ -28,6 +28,7 @@ function fullReloadOnChange() {
 // cloned this repo), this is empty and Vite resolves the published npm packages.
 const localSourceCandidates: Record<string, string> = {
   '@av-controls/protocol': '../av-controls/protocol/src/index.ts',
+  '@av-controls/reconcile-ui': '../av-controls/reconcile-ui/src/index.ts',
   '@av-controls/time-n-controls': '../av-controls/time-n-controls/src/lib.ts',
   '@dome-control/runtime': '../dome-control/runtime/src/index.ts',
 }
