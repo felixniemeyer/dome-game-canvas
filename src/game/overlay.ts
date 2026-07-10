@@ -9,13 +9,25 @@ const maxCursors = 64
 const maxOverlayInstances = maxCursors + 1
 const floatsPerInstance = 9
 const scratchDomemaster = vec2.create()
+const halfPi = Math.PI * 0.5
+const baseCursorSphereRadiusRadians = Math.PI * 0.02
+const alignmentCrossSphereRadiusRadians = Math.PI * 0.11
+const elevatedCrossAngleRadians = 20 * Math.PI / 180
+const elevatedCrossHorizontal = Math.cos(elevatedCrossAngleRadians)
+const elevatedCrossForward = Math.sin(elevatedCrossAngleRadians)
 const alignmentDirections = {
+  top: [0, 0, 1],
   front: [0, 0, 1],
-  right: [1, 0, 0],
+  right: [elevatedCrossHorizontal, 0, elevatedCrossForward],
+  back: [0, -elevatedCrossHorizontal, elevatedCrossForward],
 } as const
 
 function isInsideDome(xy: vec2) {
   return Math.hypot(xy[0], xy[1]) <= 1.05
+}
+
+function sphereRadiansToDomeRadius(radians: number) {
+  return radians / halfPi
 }
 
 export default class DomeGameOverlay {
@@ -84,8 +96,8 @@ export default class DomeGameOverlay {
     const width = Math.max(1, this.canvas.width)
     const height = Math.max(1, this.canvas.height)
     const size = Math.min(width, height)
-    const cursorRadius = Math.max(10, size * 0.02 * snapshot.cursorSize) * 2 / size
-    const crossRadius = Math.max(54, size * 0.11) * 2 / size
+    const cursorRadius = sphereRadiansToDomeRadius(baseCursorSphereRadiusRadians * snapshot.cursorSize)
+    const crossRadius = sphereRadiansToDomeRadius(alignmentCrossSphereRadiusRadians)
 
     if (snapshot.alignmentCross) {
       camDirToDomemaster(scratchDomemaster, alignmentDirections[snapshot.alignmentCross])

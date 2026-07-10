@@ -512,7 +512,7 @@ export default class CoopGameEngine {
   }
 
   shouldShowOverlay() {
-    return this.overlaySwitch.on
+    return this.overlaySwitch.on || this.alignmentCross !== null
   }
 
   getSharedOffset() {
