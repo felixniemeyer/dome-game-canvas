@@ -231,23 +231,30 @@ export default class CoopGameEngine {
     ),
   )
 
+  private collisionSdfPadFader = new Controls.Fader.Receiver(
+    new Controls.Fader.Spec(
+      new Controls.Base.Args('sdf pad', 0, 64, 10, 36, '#6a8'),
+      new Controls.Fader.State(0.02), 0, 0.1, 2,
+    ),
+  )
+
   private collisionSphereSizeFader = new Controls.Fader.Receiver(
     new Controls.Fader.Spec(
-      new Controls.Base.Args('coll size', 0, 64, 10, 36, '#9a5'),
+      new Controls.Base.Args('coll size', 10, 64, 10, 36, '#9a5'),
       new Controls.Fader.State(0.05), 0.01, 0.1, 2,
     ),
   )
 
   private collisionPositionStrengthFader = new Controls.Fader.Receiver(
     new Controls.Fader.Spec(
-      new Controls.Base.Args('coll pos', 10, 64, 10, 36, '#a95'),
+      new Controls.Base.Args('coll pos', 20, 64, 10, 36, '#a95'),
       new Controls.Fader.State(1.2), 0, 5, 2,
     ),
   )
 
   private collisionVelocityStrengthFader = new Controls.Fader.Receiver(
     new Controls.Fader.Spec(
-      new Controls.Base.Args('coll vel', 20, 64, 10, 36, '#7a9'),
+      new Controls.Base.Args('coll vel', 30, 64, 10, 36, '#7a9'),
       new Controls.Fader.State(1.2), 0, 5, 2,
     ),
   )
@@ -440,6 +447,7 @@ export default class CoopGameEngine {
       acceleration: this.accelerationFader,
       damping: this.dampingFader,
       cursorSize: this.cursorSizeFader,
+      collisionSdfPad: this.collisionSdfPadFader,
       collisionSphereSize: this.collisionSphereSizeFader,
       collisionPositionStrength: this.collisionPositionStrengthFader,
       collisionVelocityStrength: this.collisionVelocityStrengthFader,
@@ -599,6 +607,10 @@ export default class CoopGameEngine {
 
   getCollisionSphereSize() {
     return this.collisionSphereSizeFader.value
+  }
+
+  getCollisionSdfPad() {
+    return this.collisionSdfPadFader.value
   }
 
   getCameraVelocityFacingStrength() {
