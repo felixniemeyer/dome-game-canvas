@@ -9,7 +9,7 @@ import Camera from './camera'
 import DomemasterOutput from './domemaster-output'
 import SimulatorOutput from './full-dome-simulator'
 
-import { AutoPhase, SwitchablePhaseClock, type PhaseSource } from '@av-controls/time-n-controls'
+import { AutoPhase, SwitchablePhaseClock, type ModulationScale, type PhaseSource } from '@av-controls/time-n-controls'
 
 import CoopGameEngine from './game/engine'
 import DomeGameOverlay from './game/overlay'
@@ -19,6 +19,7 @@ import SphereGrid from './sphere-grid'
 
 import RenderTarget from './utils/render-target'
 import { FrameRenderer } from './frame-renderer'
+import { logManager } from './log-manager'
 
 import { vec3 } from 'gl-matrix'
 
@@ -53,6 +54,7 @@ export default class Loop {
 
   private readonly cameraControlOffset = vec3.create()
   private readonly gameCameraDriftOffset = vec3.create()
+  private readonly phaseAutomationScale: ModulationScale = { scale: 1 }
   private gameCameraDriftFade = 0
   private gameCameraDriftTime = 0
 
@@ -108,6 +110,12 @@ export default class Loop {
     this.camera.reset()
     this.coopGame.resetMotion()
   })
+  private phaseAutomationAmountFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
+    new Controls.Base.Args('phase automation', 20, 85, 10, 15, '#6a58a8'),
+    new Controls.Fader.State(1), 0, 1, 2,
+  ), (value: number) => {
+    this.phaseAutomationScale.scale = value
+  })
   private gameCameraDriftAmountFader = new Controls.Fader.Receiver(new Controls.Fader.Spec(
     new Controls.Base.Args('game cam drift', 10, 55, 10, 15, '#2f6ea0'),
     new Controls.Fader.State(0.25), 0, 1, 2,
@@ -121,6 +129,7 @@ export default class Loop {
 
   // --- controls: bpm tab (phase / beat) ---
 
+  private readonly autoPhaseLog = logManager.register('auto phase')
   private audioDropLamp = new Controls.Lamp.Receiver(new Controls.Lamp.Spec(
     new Controls.Base.Args('frame drop', 90, 45, 10, 10, '#ff6a00'),
     new Controls.Lamp.State(0), 0.35,
@@ -128,6 +137,14 @@ export default class Loop {
   private autoPhase = new AutoPhase({
     modelPath: '/100.onnx',
     onAudioFrameDropped: this.audioDropLamp.trigger.bind(this.audioDropLamp),
+    logger: (level, message, data) => {
+      if (!this.autoPhaseLog.active()) return
+      const payload = data ?? {}
+      if (level === 'error') console.error('[AutoPhase]', message, payload)
+      else if (level === 'warn') console.warn('[AutoPhase]', message, payload)
+      else if (level === 'info') console.info('[AutoPhase]', message, payload)
+      else console.debug('[AutoPhase]', message, payload)
+    },
     menuSpec: new Controls.Menu.Spec(
       new Controls.Base.Args('audio input', 70, 15, 10, 15, '#2c5f9f'),
       ['Grant mic access'],
@@ -244,7 +261,7 @@ export default class Loop {
     this.master = new RenderTarget(gl, 'half', 4, gl.LINEAR, gl.CLAMP_TO_EDGE, null)
 
     this.camera = new Camera(vec3.fromValues(0, -0.5, -0.25))
-    this.coopGame = new CoopGameEngine(this.switchablePhaseClock)
+    this.coopGame = new CoopGameEngine(this.switchablePhaseClock, this.phaseAutomationScale)
     this.coopOverlay = new DomeGameOverlay(this.canvas)
     this.domeControlAdapter = new ArtworkDomeControlAdapter(this.coopGame, () => this.queueRender())
     this.domeControlAdapter.attachGlobal()
@@ -321,7 +338,9 @@ export default class Loop {
           gameCameraDrift: this.gameCameraDriftAmountFader,
           domeGameCamera: this.domeGameCameraSwitch,
           resetCamera: this.resetCameraButton,
+          phaseAutomation: this.phaseAutomationAmountFader,
         }),
+        logs: logManager.getControlGroup(),
       }),
     })
 

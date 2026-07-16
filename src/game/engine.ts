@@ -1,6 +1,6 @@
 import { Controls } from '@av-controls/protocol'
 import { vec3, type ReadonlyMat3, type ReadonlyVec3 } from 'gl-matrix'
-import { LFOControl, type PhaseClock } from '@av-controls/time-n-controls'
+import { defaultModulationScale, LFOControl, type ModulationScale, type PhaseClock } from '@av-controls/time-n-controls'
 import type { TimeContext } from '../time-context'
 import {
   clamp01,
@@ -459,12 +459,16 @@ export default class CoopGameEngine {
 
   private readonly anomalyControlGroup: Controls.Group.Receiver
 
-  constructor(private phaseClock: PhaseClock) {
+  constructor(
+    private phaseClock: PhaseClock,
+    private modulationScale: ModulationScale = defaultModulationScale,
+  ) {
     this.anomalyHoleWarpLFO = new LFOControl(
       'hole warp',
       this.phaseClock,
       70, 50, 10, 50,
       0.6, 0, 3, '#6f7f4f',
+      this.modulationScale,
     )
     this.anomalyControlGroup = new Controls.Group.Receiver(
       new Controls.Group.SpecWithoutControls(
